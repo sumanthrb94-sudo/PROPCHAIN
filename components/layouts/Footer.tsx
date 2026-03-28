@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Twitter, Linkedin, Instagram, Send, ArrowRight, Shield } from 'lucide-react';
+import { Twitter, Linkedin, Instagram, Send, ArrowRight, Shield, Link2 } from 'lucide-react';
 
 const footerLinks = {
   Platform: [
@@ -28,26 +28,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  {
-    label: 'Twitter / X',
-    href: 'https://twitter.com/propchainAE',
-    icon: <Twitter className="w-5 h-5" aria-hidden="true" />,
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/company/propchain-ae',
-    icon: <Linkedin className="w-5 h-5" aria-hidden="true" />,
-  },
-  {
-    label: 'Instagram',
-    href: 'https://instagram.com/propchainAE',
-    icon: <Instagram className="w-5 h-5" aria-hidden="true" />,
-  },
-  {
-    label: 'Telegram',
-    href: 'https://t.me/propchainAE',
-    icon: <Send className="w-5 h-5" aria-hidden="true" />,
-  },
+  { label: 'Twitter / X', href: 'https://twitter.com/propchainAE', icon: <Twitter className="w-4 h-4" /> },
+  { label: 'LinkedIn', href: 'https://linkedin.com/company/propchain-ae', icon: <Linkedin className="w-4 h-4" /> },
+  { label: 'Instagram', href: 'https://instagram.com/propchainAE', icon: <Instagram className="w-4 h-4" /> },
+  { label: 'Telegram', href: 'https://t.me/propchainAE', icon: <Send className="w-4 h-4" /> },
 ];
 
 const licenseBadges = [
@@ -70,31 +54,75 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-navy-800 text-white" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">
-        Footer
-      </h2>
+    <footer
+      className="text-white relative overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, #020617 0%, #030318 60%, #02020e 100%)' }}
+      aria-labelledby="footer-heading"
+    >
+      <h2 id="footer-heading" className="sr-only">Footer</h2>
 
-      {/* Main footer content */}
-      <div className="container-xl py-16">
+      {/* Top gradient border — signature brand moment */}
+      <div className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, #6366f1 25%, #D4AF37 50%, #6366f1 75%, transparent 100%)' }} />
+
+      {/* Fine grid overlay */}
+      <div className="absolute inset-0 pattern-grid-fine opacity-30 pointer-events-none" />
+
+      {/* Ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-64 blur-[120px] opacity-15 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.6) 0%, rgba(212,175,55,0.3) 50%, transparent 70%)' }} />
+
+      {/* Main content */}
+      <div className="container-xl py-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
           {/* Brand column */}
           <div className="lg:col-span-2 space-y-6">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2 group" aria-label="PropChain – Home">
-              <div className="w-10 h-10 rounded-xl bg-gold-500 flex items-center justify-center shadow-glow-sm group-hover:shadow-glow transition-shadow">
-                <span className="font-display font-bold text-navy-700 text-xl leading-none">P</span>
+            <a href="/" className="flex items-center gap-3 group" aria-label="PropChain – Home">
+              <div className="relative w-9 h-9 flex-shrink-0">
+                <div
+                  className="absolute inset-0 rounded-lg rotate-45 group-hover:rotate-[55deg] transition-all duration-500"
+                  style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #6366f1 100%)', padding: '1.5px' }}
+                >
+                  <div className="w-full h-full rounded-[6px] bg-obsidian-950 flex items-center justify-center -rotate-45 group-hover:-rotate-[55deg] transition-all duration-500">
+                    <span
+                      className="font-outfit font-black text-[13px] leading-none"
+                      style={{
+                        background: 'linear-gradient(135deg, #D4AF37, #818cf8)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                      }}
+                    >
+                      PC
+                    </span>
+                  </div>
+                </div>
               </div>
-              <span className="font-display font-semibold text-2xl text-white">PropChain</span>
+              <div className="flex flex-col leading-none">
+                <span className="font-outfit font-black text-lg text-white tracking-tight leading-none">
+                  Prop<span className="text-gradient-gold">Chain</span>
+                </span>
+                <span className="text-[9px] font-bold tracking-[0.18em] uppercase mt-0.5"
+                  style={{ color: 'rgba(99,102,241,0.6)' }}>
+                  Real Estate Protocol
+                </span>
+              </div>
             </a>
 
-            <p className="text-white/60 font-body text-sm leading-relaxed max-w-xs">
-              Own Premium Dubai Properties from AED 500. Fractional ownership meets blockchain.
-              Instant liquidity, automated dividends, VARA-compliant.
+            <p className="text-white/40 text-sm leading-relaxed max-w-xs font-outfit">
+              Own premium Dubai properties from AED 500. Blockchain-settled fractional ownership with instant liquidity and automated dividends. VARA-licensed.
             </p>
 
+            {/* On-chain indicator */}
+            <div className="flex items-center gap-2 text-xs"
+              style={{ color: 'rgba(99,102,241,0.6)' }}>
+              <Link2 className="w-3.5 h-3.5" />
+              <span className="font-bold">Powered by blockchain infrastructure</span>
+            </div>
+
             {/* Social links */}
-            <div className="flex items-center gap-3" role="list" aria-label="Social media links">
+            <div className="flex items-center gap-2.5" role="list" aria-label="Social media links">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -102,7 +130,16 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-xl bg-white/5 hover:bg-gold-500/20 border border-white/10 hover:border-gold-500/40 flex items-center justify-center text-white/60 hover:text-gold-500 transition-all"
+                  className="w-9 h-9 rounded-lg flex items-center justify-center text-white/40 hover:text-white transition-all duration-300"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(99,102,241,0.15)';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)';
+                  }}
                 >
                   {social.icon}
                 </a>
@@ -111,35 +148,35 @@ export function Footer() {
 
             {/* Newsletter */}
             <div>
-              <p className="text-sm font-semibold text-white mb-3">
-                Get property investment insights
+              <p className="text-xs font-black uppercase tracking-widest text-white/30 mb-3">
+                Investment Insights
               </p>
               {subscribed ? (
-                <p className="text-emerald-400 text-sm flex items-center gap-2">
-                  <Shield className="w-4 h-4" aria-hidden="true" />
-                  Thanks! You&apos;re subscribed.
+                <p className="text-indigo-400 text-sm flex items-center gap-2 font-semibold">
+                  <Shield className="w-4 h-4" />
+                  Subscribed successfully.
                 </p>
               ) : (
-                <form
-                  onSubmit={handleSubscribe}
-                  className="flex gap-2"
-                  aria-label="Newsletter subscription"
-                >
+                <form onSubmit={handleSubscribe} className="flex gap-2" aria-label="Newsletter subscription">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
+                    placeholder="your@email.com"
                     required
-                    className="flex-1 min-w-0 px-4 py-2.5 bg-white/10 border border-white/20 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:border-gold-500 focus:bg-white/15 transition-colors"
-                    aria-label="Email address for newsletter"
+                    className="flex-1 min-w-0 px-4 py-2.5 text-sm text-white placeholder-white/20 rounded-lg outline-none transition-colors font-outfit"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                    onFocus={(e) => { e.target.style.borderColor = 'rgba(99,102,241,0.4)'; }}
+                    onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+                    aria-label="Email for newsletter"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-700 font-semibold text-sm rounded-lg transition-colors shrink-0"
-                    aria-label="Subscribe to newsletter"
+                    className="px-4 py-2.5 rounded-lg shrink-0 text-obsidian-950 font-black text-sm transition-all"
+                    style={{ background: 'linear-gradient(135deg, #D4AF37, #F0CA2A)' }}
+                    aria-label="Subscribe"
                   >
-                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
               )}
@@ -149,7 +186,7 @@ export function Footer() {
           {/* Links columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-white/25 mb-5">
                 {category}
               </h3>
               <ul className="space-y-3" role="list">
@@ -157,7 +194,7 @@ export function Footer() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="text-white/60 hover:text-gold-400 font-body text-sm transition-colors"
+                      className="text-white/45 hover:text-white text-sm font-outfit transition-colors duration-200 hover:text-gold-400"
                     >
                       {link.label}
                     </a>
@@ -169,25 +206,29 @@ export function Footer() {
         </div>
 
         {/* License badges */}
-        <div className="mt-12 pt-10 border-t border-white/10">
-          <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-6 text-center">
+        <div className="mt-14 pt-10" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <p className="text-[9px] text-white/25 uppercase tracking-[0.2em] font-black mb-5 text-center">
             Regulated &amp; Certified
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {licenseBadges.map((badge) => (
               <div
                 key={badge.label}
-                className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3"
+                className="flex items-center gap-2.5 rounded-xl p-3 transition-all duration-300"
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
               >
                 <div
-                  className="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center shrink-0"
-                  aria-hidden="true"
+                  className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.15)' }}
                 >
-                  <Shield className="w-4 h-4 text-gold-500" />
+                  <Shield className="w-3.5 h-3.5" style={{ color: '#D4AF37' }} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-white text-xs font-semibold leading-tight">{badge.label}</p>
-                  <p className="text-white/40 text-xs mt-0.5 truncate">{badge.sub}</p>
+                  <p className="text-white text-xs font-black leading-tight">{badge.label}</p>
+                  <p className="text-white/25 text-[10px] mt-0.5 truncate">{badge.sub}</p>
                 </div>
               </div>
             ))}
@@ -196,19 +237,18 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/5 bg-navy-900">
-        <div className="container-xl py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/40">
-          <p>
-            &copy; {new Date().getFullYear()} PropChain FZCO. All rights reserved. VARA License
-            #VA-2024-001.
+      <div className="relative z-10" style={{ borderTop: '1px solid rgba(255,255,255,0.04)', background: 'rgba(0,0,0,0.3)' }}>
+        <div className="container-xl py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px]"
+          style={{ color: 'rgba(255,255,255,0.25)' }}>
+          <p className="font-outfit">
+            &copy; {new Date().getFullYear()} PropChain FZCO. All rights reserved. VARA License #VA-2024-001.
           </p>
-          <p className="text-center">
-            Investing in real estate tokens involves risk. Past performance is not indicative of
-            future results. Please read our{' '}
-            <a href="/risk" className="text-gold-500/60 hover:text-gold-500 transition-colors">
+          <p className="text-center font-outfit">
+            Investing involves risk. Past performance is not indicative of future results.{' '}
+            <a href="/risk" style={{ color: 'rgba(212,175,55,0.5)' }}
+              className="hover:text-gold-400 transition-colors">
               Risk Disclosure
             </a>
-            .
           </p>
         </div>
       </div>
