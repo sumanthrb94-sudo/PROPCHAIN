@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Check, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
 
 interface ComparisonItem {
   text: string;

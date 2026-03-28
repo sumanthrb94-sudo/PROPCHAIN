@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, Building2, Map } from 'lucide-react';
 import { PropertyCard } from '@/components/ui/PropertyCard';
+import { Property } from '@/lib/data/properties';
 import { properties as fallbackProperties } from '@/lib/data/properties';
 import { useQuery } from '@tanstack/react-query';
 import { API } from '@/lib/api';
@@ -76,6 +77,7 @@ export function PropertiesSection() {
              <div className="flex -space-x-4">
                 {[1, 2, 3, 4].map(idx => (
                   <div key={idx} className="w-12 h-12 rounded-full border-2 border-obsidian-950 bg-obsidian-900 flex items-center justify-center overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={`https://picsum.photos/seed/${idx+10}/100/100`} alt="investor" className="w-full h-full object-cover" />
                   </div>
                 ))}
@@ -92,7 +94,7 @@ export function PropertiesSection() {
           {isLoading ? (
             <div className="col-span-full py-20 text-center text-white/50">Loading elite properties...</div>
           ) : (
-            properties.map((property: any, idx: number) => (
+            properties.map((property: Property, idx: number) => (
               <div key={property.id} className="h-full">
                 <PropertyCard property={property} index={idx} />
               </div>

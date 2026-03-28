@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Twitter, Linkedin, Instagram, Send, ArrowRight, Shield } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
 
 const footerLinks = {
   Platform: [

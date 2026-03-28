@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Play, Globe, Shield, Zap } from 'lucide-react';
 import Image from 'next/image';
@@ -31,7 +31,7 @@ export function HeroSection() {
       style={{
         '--mouse-x': `${springX.get()}%`,
         '--mouse-y': `${springY.get()}%`,
-      } as any}
+      } as React.CSSProperties}
     >
       {/* Immersive Background Image */}
       <motion.div 
