@@ -127,12 +127,10 @@ export function Navbar() {
   const [showTicker, setShowTicker] = useState(true);
 
   useEffect(() => {
-    let lastY = 0;
     const handleScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 20);
       setShowTicker(y < 80);
-      lastY = y;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -251,8 +249,7 @@ export function Navbar() {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}
-                  className="flex items-center justify-between w-full p-3.5 text-white/70 hover:text-white rounded-xl transition-all"
-                  style={{ ':hover': { background: 'rgba(99,102,241,0.08)' } }}
+                  className="flex items-center justify-between w-full p-3.5 text-white/70 hover:text-white hover:bg-indigo-500/10 rounded-xl transition-all"
                 >
                   <span className="font-outfit font-semibold text-sm">{link.label}</span>
                   <ChevronRight className="w-4 h-4 opacity-30" />

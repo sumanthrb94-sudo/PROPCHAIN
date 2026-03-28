@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, TrendingUp, Shield, Users, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
