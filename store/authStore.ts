@@ -1,39 +1,44 @@
 import { create } from 'zustand';
+import type { User as FirebaseUser } from 'firebase/auth';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  fullName: string;
+  role: 'investor' | 'admin';
+  kycStatus: 'pending' | 'verified' | 'rejected';
+  walletAddress?: string;
+}
 
 interface AuthState {
-  user: any | null;
-  token: string | null;
+  firebaseUser: FirebaseUser | null;
+  profile: UserProfile | null;
   isAuthenticated: boolean;
-  login: (token: string, user: any) => void;
+  isLoading: boolean;
+  setFirebaseUser: (user: FirebaseUser | null) => void;
+  setProfile: (profile: UserProfile | null) => void;
+  setLoading: (loading: boolean) => void;
   logout: () => void;
-  loadFromStorage: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
+  firebaseUser: null,
+  profile: null,
   isAuthenticated: false,
-  login: (token, user) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-    }
-    set({ token, user, isAuthenticated: true });
-  },
-  logout: () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-    }
-    set({ token: null, user: null, isAuthenticated: false });
-  },
-  loadFromStorage: () => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      const userStr = localStorage.getItem('user');
-      if (token && userStr) {
-        set({ token, user: JSON.parse(userStr), isAuthenticated: true });
-      }
-    }
-  }
+  isLoading: true,
+
+  setFirebaseUser: (user) =>
+    set({ firebaseUser: user, isAuthenticated: !!user }),
+
+  setProfile: (profile) => set({ profile }),
+
+  setLoading: (loading) => set({ isLoading: loading }),
+
+  logout: () =>
+    set({
+      firebaseUser: null,
+      profile: null,
+      isAuthenticated: false,
+      isLoading: false,
+    }),
 }));

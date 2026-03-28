@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
+interface UpdateProfileData {
+  fullName?: string;
+  phone?: string;
+  walletAddress?: string;
+}
+
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
@@ -9,20 +15,20 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       include: {
-        _count: {
-          select: { investments: true }
-        }
-      }
+        _count: { select: { investments: true } },
+      },
     });
 
     if (!user) return null;
     const { password, ...result } = user;
-    
-    // Calculate total invested
+
     const investments = await this.prisma.investment.findMany({
       where: { userId, status: 'completed' },
     });
-    const totalInvested = investments.reduce((sum, inv) => sum + Number(inv.totalPaid), 0);
+    const totalInvested = investments.reduce(
+      (sum, inv) => sum + Number(inv.totalPaid),
+      0,
+    );
 
     return {
       ...result,
@@ -31,21 +37,17 @@ export class UsersService {
     };
   }
 
-  async updateProfile(userId: string, data: any) {
-    const allowedUpdates = {
-      fullName: data.fullName,
-      phone: data.phone,
-      walletAddress: data.walletAddress,
-    };
-    
-    // Filter undefined
-    Object.keys(allowedUpdates).forEach(key => allowedUpdates[key] === undefined && delete allowedUpdates[key]);
+  async updateProfile(userId: string, data: Record<string, unknown>) {
+    const allowedUpdates: UpdateProfileData = {};
+    if (typeof data.fullName === 'string') allowedUpdates.fullName = data.fullName;
+    if (typeof data.phone === 'string') allowedUpdates.phone = data.phone;
+    if (typeof data.walletAddress === 'string') allowedUpdates.walletAddress = data.walletAddress;
 
     const user = await this.prisma.user.update({
       where: { id: userId },
       data: allowedUpdates,
     });
-    
+
     const { password, ...result } = user;
     return result;
   }
