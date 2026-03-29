@@ -15,8 +15,8 @@
     --indigo-600: #4f46e5;
     --champagne: #edcc6e;
 
-    --font-serif: var(--font-serif);
-    --font-outfit: var(--font-outfit);
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-outfit: 'Outfit', system-ui, sans-serif;
   }
 
   body {

@@ -1,22 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Instrument_Serif, Outfit } from 'next/font/google';
+import '@fontsource-variable/outfit';
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
 import './globals.css';
 import { Providers } from './providers';
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: ['400'],
-  style: ['normal', 'italic'],
-  variable: '--font-serif',
-  display: 'swap',
-});
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-outfit',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: {
@@ -69,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${outfit.variable}`}
+      className=""
       suppressHydrationWarning
     >
       <body className="font-outfit antialiased bg-[#020617] text-white selection:bg-gold-500/30 selection:text-white noise-overlay">
