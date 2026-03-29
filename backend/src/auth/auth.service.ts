@@ -63,12 +63,41 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email, role: user.role };
     const token = this.jwtService.sign(payload);
 
-    // omit password
     const { password, ...userWithoutPassword } = user;
 
     return {
       user: userWithoutPassword,
       token,
     };
+  }
+
+  async validateGoogleUser(googleUser: {
+    email: string;
+    fullName: string;
+    avatar?: string;
+    googleId: string;
+  }) {
+    let user = await this.prisma.user.findUnique({
+      where: { email: googleUser.email },
+    });
+
+    if (!user) {
+      // Auto-create account for new Google users
+      user = await this.prisma.user.create({
+        data: {
+          email: googleUser.email,
+          fullName: googleUser.fullName,
+          password: await bcrypt.hash(googleUser.googleId, 10),
+          role: 'investor',
+          kycStatus: 'pending',
+        },
+      });
+    }
+
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    const token = this.jwtService.sign(payload);
+
+    const { password, ...userWithoutPassword } = user;
+    return { user: userWithoutPassword, token };
   }
 }

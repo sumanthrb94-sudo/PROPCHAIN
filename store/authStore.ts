@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface AuthState {
   user: any | null;
@@ -6,34 +7,20 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (token: string, user: any) => void;
   logout: () => void;
-  loadFromStorage: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  login: (token, user) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
+      isAuthenticated: false,
+      login: (token, user) => set({ token, user, isAuthenticated: true }),
+      logout: () => set({ token: null, user: null, isAuthenticated: false }),
+    }),
+    {
+      name: 'auth-storage', // name of item in the storage (must be unique)
     }
-    set({ token, user, isAuthenticated: true });
-  },
-  logout: () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-    }
-    set({ token: null, user: null, isAuthenticated: false });
-  },
-  loadFromStorage: () => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      const userStr = localStorage.getItem('user');
-      if (token && userStr) {
-        set({ token, user: JSON.parse(userStr), isAuthenticated: true });
-      }
-    }
-  }
-}));
+  )
+);
+

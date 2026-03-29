@@ -7,15 +7,14 @@ async function main() {
   console.log('Seeding database...');
 
   // Create test users
-  const hashedPassword1 = await bcrypt.hash('Test123!', 10);
-  const hashedPassword2 = await bcrypt.hash('Admin123!', 10);
+  const hashedPassword = await bcrypt.hash('password123', 10);
 
   const investor = await prisma.user.upsert({
-    where: { email: 'investor@test.com' },
+    where: { email: 'investor@propchain.ae' },
     update: {},
     create: {
-      email: 'investor@test.com',
-      password: hashedPassword1,
+      email: 'investor@propchain.ae',
+      password: hashedPassword,
       fullName: 'Test Investor',
       phone: '+971500000000',
       role: 'investor',
@@ -24,11 +23,11 @@ async function main() {
   });
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@test.com' },
+    where: { email: 'admin@propchain.ae' },
     update: {},
     create: {
-      email: 'admin@test.com',
-      password: hashedPassword2,
+      email: 'admin@propchain.ae',
+      password: hashedPassword,
       fullName: 'Admin User',
       phone: '+971501111111',
       role: 'admin',

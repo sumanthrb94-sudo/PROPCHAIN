@@ -39,7 +39,11 @@ export class UsersService {
     };
     
     // Filter undefined
-    Object.keys(allowedUpdates).forEach(key => allowedUpdates[key] === undefined && delete allowedUpdates[key]);
+    Object.keys(allowedUpdates).forEach(
+      (key) =>
+        allowedUpdates[key as keyof typeof allowedUpdates] === undefined &&
+        delete allowedUpdates[key as keyof typeof allowedUpdates],
+    );
 
     const user = await this.prisma.user.update({
       where: { id: userId },

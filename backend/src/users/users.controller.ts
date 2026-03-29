@@ -8,12 +8,12 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('me')
-  getProfile(@Req() req) {
+  getProfile(@Req() req: any) {
     return this.usersService.getProfile(req.user.id);
   }
 
   @Patch('me')
-  updateProfile(@Req() req, @Body() updateData: any) {
+  updateProfile(@Req() req: any, @Body() updateData: any) {
     return this.usersService.updateProfile(req.user.id, updateData);
   }
 }

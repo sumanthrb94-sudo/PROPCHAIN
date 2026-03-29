@@ -8,12 +8,12 @@ export class InvestmentsController {
   constructor(private readonly investmentsService: InvestmentsService) {}
 
   @Post('purchase')
-  purchase(@Req() req, @Body() body: { propertyId: string; tokenAmount: number; paymentMethod: string }) {
+  purchase(@Req() req: any, @Body() body: { propertyId: string; tokenAmount: number; paymentMethod: string }) {
     return this.investmentsService.purchase(req.user.id, body);
   }
 
   @Get('user/:userId')
-  findByUser(@Req() req, @Param('userId') userId: string) {
+  findByUser(@Req() req: any, @Param('userId') userId: string) {
     if (req.user.role !== 'admin' && req.user.id !== userId) {
       throw new Error('Unauthorized access to user investments');
     }

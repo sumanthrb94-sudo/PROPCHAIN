@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.dockerignore
+Dockerfile
+cloudbuild.yaml
+npm-debug.log
+README.md
+test
+.git
+.gitignore
