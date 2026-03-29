@@ -62,8 +62,12 @@ export default function SignInPage() {
         setError('Invalid email or password.');
       } else if (msg === 'auth/too-many-requests') {
         setError('Too many attempts. Please try again later.');
+      } else if (msg === 'auth/invalid-api-key' || msg === 'auth/configuration-not-found') {
+        setError('Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_* in Vercel environment variables.');
+      } else if (msg === 'auth/network-request-failed') {
+        setError('Network error. Check your connection and try again.');
       } else {
-        setError('Sign in failed. Please try again.');
+        setError(`Sign in failed (${msg ?? 'unknown'}). Please try again.`);
       }
     } finally {
       setLoading(false);

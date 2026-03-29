@@ -3,6 +3,16 @@ import { getAuth, Auth } from 'firebase/auth';
 import { getStorage, FirebaseStorage } from 'firebase/storage';
 import { getAnalytics, Analytics, isSupported } from 'firebase/analytics';
 
+if (
+  typeof window !== 'undefined' &&
+  !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+) {
+  console.error(
+    '[PropChain] Firebase environment variables are not set. ' +
+    'Add NEXT_PUBLIC_FIREBASE_* vars to your Vercel project settings.',
+  );
+}
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,

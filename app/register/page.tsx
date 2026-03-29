@@ -72,8 +72,12 @@ export default function RegisterPage() {
         setError('This email is already registered. Try signing in.');
       } else if (code === 'auth/weak-password') {
         setError('Password is too weak. Use 8+ characters with uppercase and numbers.');
+      } else if (code === 'auth/invalid-api-key' || code === 'auth/configuration-not-found') {
+        setError('Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_* in Vercel environment variables.');
+      } else if (code === 'auth/network-request-failed') {
+        setError('Network error. Check your connection and try again.');
       } else {
-        setError('Registration failed. Please try again.');
+        setError(`Registration failed (${code ?? 'unknown'}). Please try again.`);
       }
     } finally {
       setLoading(false);
