@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Navbar } from '@/components/layouts/Navbar';
@@ -35,6 +35,25 @@ export default function RegisterPage() {
 
   const { setFirebaseUser } = useAuthStore();
 
+  // Handle redirect result on page load (mobile Google sign-in flow)
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { auth } = await import('@/lib/firebase');
+        const { getRedirectResult } = await import('firebase/auth');
+        const result = await getRedirectResult(auth);
+        if (result && !cancelled) {
+          setFirebaseUser(result.user);
+          window.location.href = '/dashboard';
+        }
+      } catch {
+        // No redirect result pending — safe to ignore
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [setFirebaseUser]);
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agreed) { setError('Please accept the terms to continue.'); return; }
@@ -66,8 +85,14 @@ export default function RegisterPage() {
     setGoogleLoading(true);
     try {
       const { auth } = await import('@/lib/firebase');
-      const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
-      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
+      const { GoogleAuthProvider, signInWithPopup, signInWithRedirect } = await import('firebase/auth');
+      const provider = new GoogleAuthProvider();
+      const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      if (isMobile) {
+        await signInWithRedirect(auth, provider);
+        return;
+      }
+      const cred = await signInWithPopup(auth, provider);
       setFirebaseUser(cred.user);
       window.location.href = '/dashboard';
     } catch (err: unknown) {

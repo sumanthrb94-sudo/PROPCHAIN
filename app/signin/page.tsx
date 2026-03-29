@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import { Navbar } from '@/components/layouts/Navbar';
@@ -26,6 +26,25 @@ export default function SignInPage() {
   const [error, setError]         = useState('');
 
   const { setFirebaseUser } = useAuthStore();
+
+  // Handle redirect result on page load (mobile Google sign-in flow)
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { auth } = await import('@/lib/firebase');
+        const { getRedirectResult } = await import('firebase/auth');
+        const result = await getRedirectResult(auth);
+        if (result && !cancelled) {
+          setFirebaseUser(result.user);
+          window.location.href = '/dashboard';
+        }
+      } catch {
+        // No redirect result pending — safe to ignore
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [setFirebaseUser]);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,8 +75,15 @@ export default function SignInPage() {
     setGoogleLoading(true);
     try {
       const { auth } = await import('@/lib/firebase');
-      const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+      const { GoogleAuthProvider, signInWithPopup, signInWithRedirect } = await import('firebase/auth');
       const provider = new GoogleAuthProvider();
+      // Use redirect on mobile (popups are blocked); popup on desktop
+      const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      if (isMobile) {
+        await signInWithRedirect(auth, provider);
+        // Page will reload — result handled in useEffect above
+        return;
+      }
       const cred = await signInWithPopup(auth, provider);
       setFirebaseUser(cred.user);
       window.location.href = '/dashboard';
