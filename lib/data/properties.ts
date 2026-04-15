@@ -259,6 +259,43 @@ export const properties: Property[] = [
     image: '/assets/property-difc.png',
     developer: 'DIFC Authority',
   },
+  {
+    id: 'syl-residences',
+    name: 'SYL Residences',
+    location: 'Tukkuguda, Hyderabad',
+    district: '4th City Corridor',
+    type: 'Off-Plan',
+    status: 'coming-soon',
+    totalValue: 15000000,
+    funded: 0,
+    minInvestment: 4499,
+    annualYield: 12.5,
+    rentalIncome: 0,
+    availableTokens: 3334,
+    totalTokens: 3334,
+    tokenPrice: 4499,
+    area: 1000,
+    description:
+      'SYL Residences represents a premier "Gold Fish" investment opportunity in Hyderabad\'s rapidly growing 4th City corridor. Currently in the exclusive Pre-Investor Phase, it offers the lowest possible entry rate before public launch. This project follows the massive success of Agartha, which saw a +37% appreciation in just 18 months.',
+    highlights: [
+      'Lowest Pre-Investor rate',
+      'First pick of premium units',
+      'High appreciation potential',
+      '4th City growth corridor',
+    ],
+    amenities: [
+      'Clubhouse',
+      'Landscaped Gardens',
+      '24/7 Security',
+      'Smart Home Ready',
+      'Infinity Pool',
+      'Jogging Track',
+    ],
+    gradient: 'from-gold-400 via-amber-500 to-yellow-600',
+    image: '/assets/property-syl.png',
+    completionYear: 2027,
+    developer: 'The Gold Team',
+  },
 ];
 
 export function getPropertyById(id: string): Property | undefined {
